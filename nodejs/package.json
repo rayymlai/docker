@@ -1,11 +1,19 @@
 {
-  "name": "docker-centos-hello",
-  "private": true,
+  "name": "docker-nodejs-web-server",
   "version": "0.0.1",
-  "description": "Node.js Hello World app on CentOS7 using docker, created from the Node.js example on docker.io",
-  "author": "Adam Miller <rayymlai@gmail.com>",
+  "description": "Dockerfile template for NodeJS Web server",
+  "main": "server.js",
+  "directories": {
+    "test": "test",
+    "script": "script"
+  },
   "dependencies": {
-    "express": "3.x"
-  }
+    "express": "~4.13.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ray Lai",
+  "license": "MIT"
 }
-

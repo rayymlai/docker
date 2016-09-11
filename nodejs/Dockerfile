@@ -1,29 +1,35 @@
-FROM centos:centos6
+# Program: Dockerfile for NodeJS
+# Purpose: NodeJS 6.x for Linux CentOS
+# Author:  Ray Lai
+# Updated: Sep 7, 2016
+# Remark:  Based on docker registry; cange to NodeJS 6.x instead of NodeJS 0.x
+#
+FROM centos:centos7
 MAINTAINER Ray Lai rayymlai@gmail.com
- 
-#Helpful utils, but only sudo is required
-RUN yum -y install tar
-RUN yum -y install vim
-RUN yum -y install nc
-RUN yum -y install sudo
-## for CentOS6 enable EPEL
-RUN rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
 
-# Upgrading system
-RUN yum -y upgrade
-RUN yum -y install wget
-RUN yum -y install unzip git zip
+# install dependencies
+RUN yum -y update; yum clean all
+RUN yum -y groupinstall "Development Tools"; yum clean all
+RUN yum -y install epel-release; yum clean all
 
-#  Download nodejs
-RUN yum -y install nodejs npm
+RUN yum -y install vm vim-X11 vim-common vim-enhanced vim-minimal; yum clean all
+RUN yum -y install tar vim wget nc curl zip unzip sudo firefoxi git; yum clean all
+ENV TERM xterm
 
-RUN yum -y clean all && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+# install nodejs 6.x
+RUN cd /tmp && curl --silent --location https://rpm.nodesource.com/setup_6.x | bash -
+RUN cd /tmp && yum -y install nodejs; yum clean all
 
-ADD . /src
+#Update npm
+RUN npm install npm -g
 
-RUN cd /src; npm install
+#Install nodemon (nodejs CI tool)
+RUN npm install nodemon -g
 
-EXPOSE 8080
+#Install forever (nodejs CI tool)
+RUN npm install forever -g
 
-CMD ["node", "/src/index.js"]
+EXPOSE 3000 3001 3002 3003
 
+WORKDIR /opt/nodejs
+ENTRYPOINT ["forever", "--killSignal=SIGTERM", "--minUptime=10000", "--spinSleepTime=20000", "-c", "nodemon --delay 10 --exitcrash", "server.js"]

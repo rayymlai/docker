@@ -1,12 +1,20 @@
+// Program: app.js
+// Purpose: NodeJS startup scripts
+// Author:  Ray Lai
+// Updated: Sep 7, 2016
+// License: MIT license
+//
 var express = require('express');
 
 var server = express();
 server.use(express.static(__dirname + '/'));
 
-var port = 8080;
+var port = 8080 || process.env.PORT;
 server.get('/', function (req, res) {
-   res.send('Welcome to NodeJS Web Server!\n');
+   res.send('Welcome to Express Web Server!\n');
 });
 server.listen(port, function() {
-   console.log('NodeJS Web server listening on port ' + port);
+   console.log('Express Web server listening on port ' + port);
 });
+
+

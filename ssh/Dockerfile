@@ -1,3 +1,9 @@
+# Program: Dockerfile for SSH
+# Purpose: SSH Linux CentOS
+# Author:  Ray Lai
+# Updated: Sep 7, 2016
+# Remark:  Based on docker registry SSH dockerfile definition, modified for CentOS and add Julia for Math simulation
+#
 FROM centos:centos7
 MAINTAINER Ray Lai <rayymlai@gmail.com>
 
@@ -30,7 +36,7 @@ RUN yum -y clean all && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 ADD . /opt/nodejs
 RUN cd /opt/nodejs; npm install express mocha fs supertest
 
-EXPOSE 8080
+EXPOSE 3000
 #CMD ["node", "/opt/nodejs/app.js"]
 
 # install ssh
@@ -40,8 +46,8 @@ RUN mkdir /var/run/sshd
 RUN ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key -N ''
 ENV TERM xterm
 
-ADD ./start.sh /start.sh
-RUN chmod 755 /start.sh
+ADD ./provisioning.sh /provisioning.sh
+RUN chmod 755 /provisioning.sh
 # EXPOSE 22
-RUN /start.sh
+RUN /provisioning.sh
 ENTRYPOINT ["/usr/sbin/sshd", "-D"]
