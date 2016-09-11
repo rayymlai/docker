@@ -12,6 +12,8 @@ Most Dockerfile definitions are from Docker registry with minor enhancement. The
 * Individual docker project has detailed installation instructions in readme.md.
 
 ## Scope
+This project will include dockerfiles for the following areas.
+
 For application development:
 * NodeJS 6.x
 * MongoDB 3.2 replicaset
@@ -36,5 +38,19 @@ In general:
   - change directory to your docker image which contains Dockerfile
   - build docker image, e.g. docker build -t rayymlai/xxx .
 * Start your docker instance
-  - e.g. docker run --name xxx --hostname xxx.yourdomain.com -d -p nnn:nnn -v /mnt/data/yyy:/yyy rayymlai/yourdockername
+  - If you want to create a docker instance with the hostname xxx.yourdomain.com with TCP port nnn, and your Linux data volume inside the docker instance /yyy is mapped to an external data volume /mnt/data/yyy, you can issue the command:
 
+```
+docker run --name xxx --hostname xxx.yourdomain.com -d -p nnn:nnn -v /mnt/data/yyy:/yyy rayymlai/yourdockername
+```
+
+In order to enable micro-services, you need to perform additional tasks (out of scope for this project), e.g.
+* Create multiple docker instances
+* Enable load balancer for docker instances (for scalability and availability)
+* Enable heart-beat detecting for site reliability (for availability)
+  - You can consider using Consul with Docker Swarm
+  - Alternative technologies: Amazon Lambda
+* For deploying micro-services, there are a few options
+  - Configuration tools to auto-deploy, e.g. Chef/Ansible
+  - Create auto-deploy tasks in Jenkins continuous integration 
+  - Container management tools, e.g. Mesophere, Docker Swarm
