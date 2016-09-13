@@ -25,7 +25,7 @@ For infrastructure:
 * Headless VNC 
 * CentOS with SSH
 
-For simulation:
+For mission operations simulation or modeling:
 * NASA GMAT R2015a
 
 ## How to use
@@ -36,12 +36,12 @@ In general:
 * Mount a shared data volume or block storage, e.g. under /mnt/data
 * Build docker images
   - change directory to your docker image which contains Dockerfile
-  - build docker image, e.g. docker build -t rayymlai/xxx .
+  - build docker image, e.g. docker build -t rayymlai/nodejs .
 * Start your docker instance
-  - If you want to create a docker instance with the hostname xxx.yourdomain.com with TCP port nnn, and your Linux data volume inside the docker instance /yyy is mapped to an external data volume /mnt/data/yyy, you can issue the command:
+  - If you want to create a docker instance with the hostname xxx.yourdomain.com with TCP port nnn, and your Linux data volume inside the docker instance /yyy is mapped to an external data volume /mnt/data/yyy, you can issue the command something like "docker run --name xxx --hostname xxx.yourdomain.com -d -p nnn:nnn -v /mnt/data/yyy:/yyy rayymlai/yourdockername"
 
 ```
-docker run --name xxx --hostname xxx.yourdomain.com -d -p nnn:nnn -v /mnt/data/yyy:/yyy rayymlai/yourdockername
+docker run --name node01 --hostname node01.ourhome.com -d -p 4001:3000 -v /mnt/data/prod/mygithubproject:/opt/nodejs rayymlai/nodejs
 ```
 
 In order to enable micro-services, you need to perform additional tasks (out of scope for this project), e.g.
