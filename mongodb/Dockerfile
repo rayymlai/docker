@@ -9,13 +9,13 @@ RUN yum -y install vm vim-X11 vim-common vim-enhanced vim-minimal; yum clean all
 RUN yum -y install tar wget nc curl zip unzip sudo firefox; yum clean all
 ENV TERM xterm
 
-# install mongodb v3.2
+# install mongodb v3.4 community edition
 # RUN yum -y install mongodb-server; yum clean all
 ADD ./mongodb.repo /etc/yum.repos.d/mongodb.repo
 RUN yum -y install mongodb-org; yum clean all
 RUN mkdir -p /data/db
 #RUN /etc/rc.d/init.d/mongod restart
-RUN chkconfig mongod on
+#RUN chkconfig mongod on
 
 # install pymongo dependencies (python and pip)
 RUN yum install gcc
